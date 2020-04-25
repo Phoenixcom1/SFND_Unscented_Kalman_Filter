@@ -5,43 +5,41 @@
 #include "sensors/lidar.h"
 #include "tools.h"
 
-class Highway
-{
+class Highway {
 public:
 
-	std::vector<Car> traffic;
-	Car egoCar;
-	Tools tools;
-	bool pass = true;
-	std::vector<double> rmseThreshold = {0.30,0.16,0.95,0.70};
-	std::vector<double> rmseFailLog = {0.0,0.0,0.0,0.0};
-	Lidar* lidar;
-	
-	// Parameters 
-	// --------------------------------
-	// Set which cars to track with UKF
-	std::vector<bool> trackCars = {true,true,true};
-	// Visualize sensor measurements
-	bool visualize_lidar = true;
-	bool visualize_radar = true;
-	bool visualize_pcd = false;
-	// Predict path in the future using UKF
-	double projectedTime = 0;
-	int projectedSteps = 0;
-	// --------------------------------
+    std::vector<Car> traffic;
+    Car egoCar;
+    Tools tools;
+    bool pass = true;
+    std::vector<double> rmseThreshold = {0.30, 0.16, 0.95, 0.70};
+    std::vector<double> rmseFailLog = {0.0, 0.0, 0.0, 0.0};
+    Lidar *lidar;
 
-	Highway(pcl::visualization::PCLVisualizer::Ptr& viewer)
-	{
+    // Parameters
+    // --------------------------------
+    // Set which cars to track with UKF
+    std::vector<bool> trackCars = {true, true, true};
+    // Visualize sensor measurements
+    bool visualize_lidar = true;
+    bool visualize_radar = true;
+    bool visualize_pcd = true;
+    // Predict path in the future using UKF
+    double projectedTime = 2;
+    int projectedSteps = 0;
+    // --------------------------------
 
-		tools = Tools();
-	
-		egoCar = Car(Vect3(0, 0, 0), Vect3(4, 2, 2), Color(0, 1, 0), 0, 0, 2, "egoCar");
-		
-		Car car1(Vect3(-10, 4, 0), Vect3(4, 2, 2), Color(0, 0, 1), 5, 0, 2, "car1");
-		
-		std::vector<accuation> car1_instructions;
-		accuation a = accuation(0.5*1e6, 0.5, 0.0);
-		car1_instructions.push_back(a);
+    Highway(pcl::visualization::PCLVisualizer::Ptr &viewer) {
+
+        tools = Tools();
+
+        egoCar = Car(Vect3(0, 0, 0), Vect3(4, 2, 2), Color(0, 1, 0), 0, 0, 2, "egoCar");
+
+        Car car1(Vect3(-10, 4, 0), Vect3(4, 2, 2), Color(0, 0, 1), 5, 0, 2, "car1");
+
+        std::vector<accuation> car1_instructions;
+        accuation a = accuation(0.5 * 1e6, 0.5, 0.0);
+        car1_instructions.push_back(a);
 		a = accuation(2.2*1e6, 0.0, -0.2);
 		car1_instructions.push_back(a);
 		a = accuation(3.3*1e6, 0.0, 0.2);
